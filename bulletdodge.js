@@ -20,6 +20,9 @@ function preload() {
 	game.load.image('background', 'assets/images/grid_background.png');
 	game.load.image('fireball', 'assets/images/fireball.png');
 	game.load.spritesheet('explosion', 'https://raw.githubusercontent.com/jschomay/phaser-demo-game/master/assets/explode.png', 128, 128);
+    game.load.audio('explosionSound_1', 'assets/sounds/explosion-01.mp3', true);
+    game.load.audio('explosionSound_2', 'assets/sounds/explosion-02.mp3', true);
+    game.load.audio('swoosh', 'assets/sounds/swoosh.mp3', true);
 }
 
 var bmd;
@@ -33,6 +36,10 @@ var health = 3;
 var bullets;
 var bulletSpeed = 700;
 var bulletTime = 0;
+
+var explosionSound_1;
+var explosionSound_2;
+var swooshSound;
 
 var emitter;
 var explosions;
@@ -74,6 +81,12 @@ function create() {
 	bullets.setAll('anchor.y', 1);
     bullets.setAll('outOfBoundsKill', true);
     bullets.setAll('checkWorldBounds', true);
+
+    //sounds:
+    // game.add.sound(key, volume, loop, connect)
+    explosionSound_1 = game.add.sound('explosionSound_1');
+    explosionSound_2 =  game.add.sound('explosionSound_2');
+    swooshSound = game.add.sound('swoosh');
 
     // explosions
      //  An explosion pool
@@ -233,6 +246,7 @@ function update() {
 
 function fireBullet() {
 	bullet = bullets.getFirstExists(false);
+    swooshSound.play();
 
     if (bullet) {
     	var side = Math.floor(Math.random()*(4) + 1)
@@ -341,6 +355,8 @@ function updateDisplayTexts() {
 
 function collisionHandler(player, bullet) {
 	player.damage(1);
+    if(player.alive) explosionSound_2.play();
+    else explosionSound_1.play();
     bullet.kill();
 	// bullet.reset(0,0);
 	emitExplosion(player);
