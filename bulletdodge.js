@@ -21,7 +21,7 @@ function preload() {
 	game.load.image('fireball', 'assets/images/fireball.png');
 	game.load.spritesheet('explosion', 'https://raw.githubusercontent.com/jschomay/phaser-demo-game/master/assets/explode.png', 128, 128);
     game.load.audio('explosionSound_1', 'assets/sounds/explosion-01.mp3', true);
-    game.load.audio('explosionSound_2', 'assets/sounds/explosion-02.mp3', true);
+    game.load.audio('explosionSound_2', 'assets/sounds/explosion-01.mp3', true);
     game.load.audio('swoosh', 'assets/sounds/swoosh.mp3', true);
 }
 
